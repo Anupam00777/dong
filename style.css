@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.flex {
+  display: flex;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+}
+.screen {
+  height: 100vh;
+  width: 100vw;
+  background: url("/bg.jpg") fixed no-repeat;
+  background-size: cover;
+  flex-direction: column;
+}
+.menu {
+  z-index: 5;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  border: 2px solid gold;
+}
+.bgMenu {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+.options {
+  position: absolute;
+  flex-direction: column;
+}
+.op {
+  cursor: pointer;
+  min-width: 30vw;
+  min-height: 5vh;
+  background-color: rgb(30, 204, 30);
+  margin: 10px 0;
+  border: 2px solid green;
+  border-radius: 6px;
+  transition: all 1s ease-in-out;
+  font-size: 2rem;
+}
+.op:hover {
+  height: 50px;
+  background-color: yellow;
+}
+.playArea {
+  height: 80vh;
+  margin: 10vh 0 0 0;
+  width: 95vw;
+  max-height: 100vw;
+  max-width: 100vh;
+  border: 2px solid gold;
+  background-color: rgba(255, 255, 255, 0.279);
+}
+.scoreArea {
+  height: 10vh;
+  width: 40vw;
+  max-height: 20vw;
+  max-width: 50vh;
+  border: 2px solid gold;
+  margin: 10vh 0 0 0;
+  background-color: rgb(34, 254, 67);
+  box-shadow: 10px 10px 15px black;
+}
+.sc {
+  width: 40%;
+  height: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 4vw;
+  text-shadow: 3px 3px 6px black;
+}
+.player {
+  width: 2%;
+  height: 20%;
+  position: relative;
+  background-color: black;
+}
+.ball {
+  border-radius: 50%;
+  position: absolute;
+  border: 2px solid black;
+}
+.player2 {
+  margin-left: auto;
+}
+.n {
+  display: none;
+}
+.cm {
+  margin: 6px auto;
+}
+#bSNum {
+  height: 100px;
+  flex-direction: column;
+}
+#mode {
+  border: 1px solid black;
+  border-radius: 0;
+  height: 30px;
+  background-color: black;
+  color: lime;
+}
+#sMenu {
+  display: none;
+}
