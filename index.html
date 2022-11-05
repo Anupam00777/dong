@@ -26,13 +26,10 @@
         flex-direction: column;
       }
       .menu {
-        /* display: none; */
         z-index: 5;
         position: absolute;
-        height: 80vh;
-        width: 80vw;
-        max-height: 80vw;
-        max-width: 80vh;
+        height: 100vh;
+        width: 100vw;
         border: 2px solid gold;
       }
       .bgMenu {
@@ -47,13 +44,13 @@
       .op {
         cursor: pointer;
         min-width: 30vw;
-        height: 40px;
-        min-height: 20%;
+        min-height: 5vh;
         background-color: rgb(30, 204, 30);
         margin: 10px 0;
         border: 2px solid green;
         border-radius: 6px;
         transition: all 1s ease-in-out;
+        font-size: 2rem;
       }
       .op:hover {
         height: 50px;
@@ -61,10 +58,12 @@
       }
       .playArea {
         height: 80vh;
-        width: 80vw;
-        max-height: 80vw;
-        max-width: 80vh;
+        margin: 10vh 0 0 0;
+        width: 95vw;
+        max-height: 100vw;
+        max-width: 100vh;
         border: 2px solid gold;
+        background-color: rgba(255, 255, 255, 0.279);
       }
       .scoreArea {
         height: 10vh;
@@ -72,8 +71,9 @@
         max-height: 20vw;
         max-width: 50vh;
         border: 2px solid gold;
-        position: absolute;
-        bottom: 3px;
+        margin: 10vh 0 0 0;
+        background-color: rgb(34, 254, 67);
+        box-shadow: 10px 10px 15px black;
       }
       .sc {
         width: 40%;
@@ -82,6 +82,7 @@
         align-items: center;
         justify-content: center;
         font-size: 4vw;
+        text-shadow: 3px 3px 6px black;
       }
       .player {
         width: 2%;
@@ -92,6 +93,7 @@
       .ball {
         border-radius: 50%;
         position: absolute;
+        border: 2px solid black;
       }
       .player2 {
         margin-left: auto;
@@ -106,14 +108,14 @@
         height: 100px;
         flex-direction: column;
       }
-      #mode{
+      #mode {
         border: 1px solid black;
         border-radius: 0;
         height: 30px;
         background-color: black;
         color: lime;
       }
-      #sMenu{
+      #sMenu {
         display: none;
       }
     </style>
@@ -145,16 +147,23 @@
           </div>
           <div class="op flex center">
             <b><i>Mode: &nbsp</i></b>
-            <span class="modes"> <b> <select name="modes" id="mode" title="Select Modes">
-              <option value="0">Normal Mode</option>
-              <option value="1">Fast Mode</option>
-              <option value="2">Balls increasing with time</option>
-              <option value="3">Super Speed Mode</option>
-              <option value="4">Hard Mode</option>
-              <option value="5">Slow Mode</option>
-            </select> </b> </span>
+            <span class="modes">
+              <b>
+                <select name="modes" id="mode" title="Select Modes">
+                  <option value="0">Normal Mode</option>
+                  <option value="1">Fast Mode</option>
+                  <option value="2">Balls increasing with time</option>
+                  <option value="3">Super Speed Mode</option>
+                  <option value="4">Hard Mode</option>
+                  <option value="5">Slow Mode</option>
+                </select>
+              </b>
+            </span>
           </div>
-          <div class="op flex center"></select></div>
+          <div class="op flex center">
+            Select Ball color &nbsp
+            <input type="color" name="color" id="bCol" />
+          </div>
           <div class="op flex center" id="back">BACK</div>
         </div>
       </div>
@@ -302,7 +311,7 @@
           this.position[i][0] + this.size >= this.width - this.p2w
         ) {
           this.directions[i][0] = -this.directions[i][0];
-          this.speed += 0.15/this.num;
+          this.speed += 0.15 / this.num;
           return;
         } else if (this.position[i][0] <= 0) {
           this.directions[i][0] = -this.directions[i][0];
@@ -338,6 +347,7 @@
     let pBtn = document.getElementById("play");
     let sBtn = document.getElementById("setting");
     let eBtn = document.getElementById("exit");
+    let bCol = document.getElementById("bCol");
     let mMenu = document.getElementById("mMenu");
     let sMenu = document.getElementById("sMenu");
     let bNum = document.getElementById("bNum");
@@ -346,28 +356,29 @@
     let bVal = document.getElementById("bVal");
     let menu = document.getElementsByClassName("menu")[0];
 
-    pBtn.addEventListener("click", ()=>{
+    pBtn.addEventListener("click", () => {
       menu.style.display = "none";
+      color = bCol.value;
       start();
-    })
-    sBtn.addEventListener("click",()=>{
+    });
+    sBtn.addEventListener("click", () => {
       mMenu.style.display = "none";
       sMenu.style.display = "flex";
-    })
-    eBtn.addEventListener("click", ()=>{
+    });
+    eBtn.addEventListener("click", () => {
       window.close();
-    })
-    bNum.addEventListener("change", (v)=>{
-      number = v.target.value; 
-      bVal.innerHTML = "<b>" + v.target.value + "</b>"
-          })
-    back.addEventListener("click", ()=>{
-            sMenu.style.display = "none";
-            mMenu.style.display = "flex";
-          })
-    mode.addEventListener("click",(e)=>{
-      console.log(typeof(e.target.value));
-      switch(e.target.value){
+    });
+    bNum.addEventListener("change", (v) => {
+      number = v.target.value;
+      bVal.innerHTML = "<b>" + v.target.value + "</b>";
+    });
+    back.addEventListener("click", () => {
+      sMenu.style.display = "none";
+      mMenu.style.display = "flex";
+    });
+    mode.addEventListener("click", (e) => {
+      console.log(typeof e.target.value);
+      switch (e.target.value) {
         case "0":
           break;
         case 1:
@@ -375,11 +386,12 @@
           blspeed = 5;
           break;
         case "2":
-          setInterval(()=>{
-            if(!pause)
-            {ball.create(1);
-              plspeed += 0.5;}
-          },5000)
+          setInterval(() => {
+            if (!pause) {
+              ball.create(1);
+              plspeed += 0.5;
+            }
+          }, 5000);
           break;
         case "3":
           plspeed = 12;
@@ -395,7 +407,7 @@
           blspeed = 0.25;
           break;
       }
-    })
+    });
     let controller = [0, 0];
     function start() {
       dong = new Dong("player1", "player2", "p1s", "p2s", "playArea", plspeed);
