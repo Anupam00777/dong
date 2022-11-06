@@ -180,6 +180,7 @@ let size = 3;
 let max = 6;
 let color = "red";
 let pBtn = document.getElementById("play");
+let htp = document.getElementById("htp");
 let sBtn = document.getElementById("setting");
 let eBtn = document.getElementById("exit");
 let bCol = document.getElementById("bCol");
@@ -224,6 +225,10 @@ bspeed.addEventListener("change", (v) => {
 back.addEventListener("click", () => {
   sMenu.style.display = "none";
   mMenu.style.display = "flex";
+});
+htp.addEventListener("click", () => {
+  alert(`On PC: use W and ↑ arrow 
+On android: Touch upper and lower halves of screen`);
 });
 mode.addEventListener("click", (e) => {
   switch (e.target.value) {
