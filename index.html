@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <div class="tArea flex">
+      <div class="tA" id="t1"></div>
+      <div class="tA" id="t2"></div>
+    </div>
     <div class="screen flex center">
       <div class="menu flex center">
         <img src="/menu1.png" alt="" class="bgMenu flex" />
@@ -31,6 +35,34 @@
               min="1"
             />
             <p id="bVal">1</p>
+          </div>
+          <div class="op flex center" id="BS">
+            <p class="cm">Size of Balls</p>
+            <br />
+            <input
+              type="range"
+              name="bS"
+              id="bSize"
+              placeholder="Size of balls"
+              minlength="0"
+              max="25"
+              min="1"
+            />
+            <p id="sVal">1</p>
+          </div>
+          <div class="op flex center" id="bspeed">
+            <p class="cm">Speed of Balls</p>
+            <br />
+            <input
+              type="range"
+              name="bSp"
+              id="bSpeed"
+              placeholder="Speed of balls"
+              minlength="0"
+              max="20"
+              min="1"
+            />
+            <p id="spVal">1</p>
           </div>
           <div class="op flex center">
             <b><i>Mode: &nbsp</i></b>

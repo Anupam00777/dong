@@ -2,19 +2,24 @@ let playerPosition = [0, 0];
 let pause = false;
 class Dong {
   constructor(p1, p2, s1, s2, area, pSpeed) {
-    this.p1 = document.getElementsByClassName(p1)[0];
-    this.p2 = document.getElementsByClassName(p2)[0];
-    this.s1 = document.getElementsByClassName(s1)[0];
-    this.s2 = document.getElementsByClassName(s2)[0];
-    this.area = document.getElementsByClassName(area)[0];
-    this.width = this.area.offsetWidth;
-    this.height = this.area.offsetHeight - this.p1.offsetHeight;
-    this.pSpeed = 100 / pSpeed;
-    this.movementLeap = this.height / this.pSpeed;
+    this.speed = 100 / pSpeed;
     this.pMove1 = 0;
     this.pMove2 = 0;
+    this.pc1 = p1;
+    this.pc2 = p2;
+    this.ar = area;
+    this.adjust();
+    this.s1 = document.getElementsByClassName(s1)[0];
+    this.s2 = document.getElementsByClassName(s2)[0];
   }
-
+  adjust() {
+    this.p1 = document.getElementsByClassName(this.pc1)[0];
+    this.p2 = document.getElementsByClassName(this.pc2)[0];
+    this.area = document.getElementsByClassName(this.ar)[0];
+    this.width = this.area.offsetWidth;
+    this.height = this.area.offsetHeight - this.p1.offsetHeight;
+    this.movementLeap = this.height / this.speed;
+  }
   update() {
     switch (this.pMove1) {
       case 1:
@@ -66,24 +71,30 @@ class Ball {
   ) {
     this.size = size * 10;
     this.ball = document.getElementsByClassName(ball);
-    this.p1h = document.getElementsByClassName(p1)[0].offsetHeight;
-    this.p2h = document.getElementsByClassName(p2)[0].offsetHeight;
-    this.p1w = document.getElementsByClassName(p1)[0].offsetWidth;
-    this.p2w = document.getElementsByClassName(p2)[0].offsetWidth;
     this.s1 = document.getElementsByClassName(s1)[0];
     this.s2 = document.getElementsByClassName(s2)[0];
+    this.p1 = p1;
+    this.p2 = p2;
+    this.ar = area;
     this.color = color;
+    this.adjust();
     this.num = num;
     this.scorePrefix = scorePrefix;
-    this.area = document.getElementsByClassName(area)[0];
-    this.height = this.area.offsetHeight;
-    this.width = this.area.offsetWidth;
     this.speed = speed;
     this.directions = {};
     this.position = {};
     this.no = 0;
     this.score = [0, 0];
     this.create(this.num);
+  }
+  adjust() {
+    this.p1h = document.getElementsByClassName(this.p1)[0].offsetHeight;
+    this.p2h = document.getElementsByClassName(this.p2)[0].offsetHeight;
+    this.p1w = document.getElementsByClassName(this.p1)[0].offsetWidth;
+    this.p2w = document.getElementsByClassName(this.p2)[0].offsetWidth;
+    this.area = document.getElementsByClassName(this.ar)[0];
+    this.height = this.area.offsetHeight;
+    this.width = this.area.offsetWidth;
   }
   create(x) {
     for (let i = this.no; i < this.no + x; i++) {
@@ -122,7 +133,7 @@ class Ball {
       this.position[i][0] <= this.p1w
     ) {
       this.directions[i][0] = -this.directions[i][0];
-      this.speed += 0.15;
+      this.speed += 0.15 / this.num;
       return;
     } else if (
       playerArea2[0] < this.position[i][1] &&
@@ -170,9 +181,15 @@ let bCol = document.getElementById("bCol");
 let mMenu = document.getElementById("mMenu");
 let sMenu = document.getElementById("sMenu");
 let bNum = document.getElementById("bNum");
+let bSize = document.getElementById("bSize");
+let bVal = document.getElementById("bVal");
+let spVal = document.getElementById("spVal");
+let bspeed = document.getElementById("bspeed");
+let sVal = document.getElementById("sVal");
 let mode = document.getElementById("mode");
 let back = document.getElementById("back");
-let bVal = document.getElementById("bVal");
+let t1 = document.getElementById("t1");
+let t2 = document.getElementById("t2");
 let menu = document.getElementsByClassName("menu")[0];
 
 pBtn.addEventListener("click", () => {
@@ -191,12 +208,19 @@ bNum.addEventListener("change", (v) => {
   number = v.target.value;
   bVal.innerHTML = "<b>" + v.target.value + "</b>";
 });
+bSize.addEventListener("change", (v) => {
+  size = v.target.value;
+  sVal.innerHTML = "<b>" + v.target.value + "</b>";
+});
+bspeed.addEventListener("change", (v) => {
+  blspeed = v.target.value;
+  spVal.innerHTML = "<b>" + v.target.value + "</b>";
+});
 back.addEventListener("click", () => {
   sMenu.style.display = "none";
   mMenu.style.display = "flex";
 });
 mode.addEventListener("click", (e) => {
-  console.log(typeof e.target.value);
   switch (e.target.value) {
     case "0":
       break;
@@ -229,23 +253,25 @@ mode.addEventListener("click", (e) => {
 });
 let controller = [0, 0];
 function start() {
-  dong = new Dong("player1", "player2", "p1s", "p2s", "playArea", plspeed);
-  ball = new Ball(
-    "player1",
-    "player2",
-    "p1s",
-    "p2s",
-    size,
-    "ball",
-    color,
-    number,
-    "playArea",
-    blspeed
-  );
-  game();
+  if (document.documentElement.requestFullscreen()) {
+    dong = new Dong("player1", "player2", "p1s", "p2s", "playArea", plspeed);
+    ball = new Ball(
+      "player1",
+      "player2",
+      "p1s",
+      "p2s",
+      size,
+      "ball",
+      color,
+      number,
+      "playArea",
+      blspeed
+    );
+    game();
+  }
 }
-document.addEventListener("keydown", (e) => {
-  switch (e.keyCode) {
+function cont(e) {
+  switch (e) {
     case 87:
       controller[0] = 1;
       break;
@@ -263,9 +289,23 @@ document.addEventListener("keydown", (e) => {
       game();
   }
   control();
+}
+t1.addEventListener("click", () => {
+  controller[0] = controller[0] == 1 ? -1 : 1;
+  control();
+});
+t2.addEventListener("click", () => {
+  controller[1] = controller[1] == 1 ? -1 : 1;
+  control();
+});
+document.addEventListener("keydown", (e) => {
+  cont(e.keyCode);
 });
 window.addEventListener("resize", () => {
-  location.reload();
+  if (dong != null && ball != null) {
+    dong.adjust();
+    ball.adjust();
+  }
 });
 function control() {
   switch (controller[0]) {
