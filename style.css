@@ -56,6 +56,19 @@
   transition: all 1s ease-in-out;
   font-size: 2vh;
 }
+.inst {
+  position: absolute;
+  z-index: 15;
+  width: 80vw;
+  height: 50vh;
+  background-color: rgb(0, 255, 119);
+  border: 2px solid black;
+  border-radius: 5px;
+  margin: 25vh 10vw;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
 .op:hover {
   height: 50px;
   background-color: yellow;

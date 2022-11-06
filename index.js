@@ -227,8 +227,10 @@ back.addEventListener("click", () => {
   mMenu.style.display = "flex";
 });
 htp.addEventListener("click", () => {
-  alert(`On PC: use W and ↑ arrow 
-On android: Touch upper and lower halves of screen`);
+  document.getElementsByClassName("inst")[0].style.display = "flex";
+  setTimeout(() => {
+    document.getElementsByClassName("inst")[0].style.display = "none";
+  }, 3000);
 });
 mode.addEventListener("click", (e) => {
   switch (e.target.value) {
