@@ -2,7 +2,7 @@ let playerPosition = [0, 0];
 let pause = false;
 class Dong {
   constructor(p1, p2, s1, s2, area, pSpeed) {
-    this.speed = 100 / pSpeed;
+    this.speed = 50 / pSpeed;
     this.pMove1 = 0;
     this.pMove2 = 0;
     this.pc1 = p1;
@@ -67,6 +67,7 @@ class Ball {
     num,
     area,
     speed = 1,
+    max,
     scorePrefix = 1
   ) {
     this.size = size * 10;
@@ -76,6 +77,7 @@ class Ball {
     this.p1 = p1;
     this.p2 = p2;
     this.ar = area;
+    this.max = max;
     this.color = color;
     this.adjust();
     this.num = num;
@@ -118,6 +120,7 @@ class Ball {
     this.position[x] = [this.width / 2, this.height / 2];
   }
   collision(i) {
+    this.speed = this.speed > this.max ? this.max : this.speed;
     let playerArea1 = [playerPosition[0], playerPosition[0] + this.p1h];
     let playerArea2 = [playerPosition[1], playerPosition[1] + this.p2h];
     if (
@@ -174,6 +177,7 @@ let plspeed = 2;
 let blspeed = 2;
 let number = 1;
 let size = 3;
+let max = 6;
 let color = "red";
 let pBtn = document.getElementById("play");
 let sBtn = document.getElementById("setting");
@@ -228,6 +232,7 @@ mode.addEventListener("click", (e) => {
     case 1:
       plspeed = 6;
       blspeed = 5;
+      max = 10;
       break;
     case "2":
       setInterval(() => {
@@ -236,19 +241,23 @@ mode.addEventListener("click", (e) => {
           plspeed += 0.5;
         }
       }, 5000);
+      max = 4;
       break;
     case "3":
       plspeed = 12;
       blspeed = 10;
+      max = 14;
       break;
     case "4":
       number = 5;
       blspeed = 5;
       plspeed = 8;
+      max = 10;
       break;
     case "5":
       plspeed = 2;
       blspeed = 0.25;
+      max = 2;
       break;
   }
 });
@@ -266,7 +275,8 @@ function start() {
       color,
       number,
       "playArea",
-      blspeed
+      blspeed,
+      max
     );
     game();
   }
