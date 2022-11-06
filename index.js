@@ -151,6 +151,7 @@ class Ball {
       this.directions[i][0] = -this.directions[i][0];
       this.score[1] += this.scorePrefix;
       this.s1.innerHTML = this.score[1];
+      return;
     }
   }
   update() {

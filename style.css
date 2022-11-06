@@ -33,6 +33,17 @@
   position: absolute;
   flex-direction: column;
 }
+.title {
+  position: absolute;
+  z-index: 10;
+  width: 100vw;
+  top: 10px;
+}
+#title {
+  max-width: 80vh;
+  height: 20vh;
+  max-height: 80vw;
+}
 .op {
   cursor: pointer;
   min-width: 30vw;
@@ -43,7 +54,7 @@
   border: 2px solid green;
   border-radius: 6px;
   transition: all 1s ease-in-out;
-  font-size: 2rem;
+  font-size: 2vh;
 }
 .op:hover {
   height: 50px;
@@ -131,4 +142,5 @@
 }
 #sMenu {
   display: none;
+  top: 20vh;
 }
